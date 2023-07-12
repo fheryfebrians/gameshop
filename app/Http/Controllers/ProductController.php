@@ -112,10 +112,13 @@ class ProductController extends Controller
 
             // Store the proof of payment
             if ($req->hasFile('proof')) {
-                $proof = $req->file('proof');
-                $proofPath = $proof->store('public/proofs');
-                $proofPath = str_replace('public/', 'storage/', $proofPath);
-                $order->proof = $proofPath;
+                $file = $req->file('proof');
+                $date = \Carbon\Carbon::now()->format('dmYHis');
+                $name = 'proof_' . $date . '.' . $file->getClientOriginalExtension();
+                $req->file('proof')->move('storage/proofs/', $name);
+                $proof = 'storage/proofs/'.$name;
+
+                $order->proof = $proof;
             }
 
             $order->save();
@@ -171,12 +174,14 @@ class ProductController extends Controller
 
         // Store the proof of payment
         if ($request->hasFile('proof')) {
-            $proof = $request->file('proof');
-            $proofPath = $proof->store('public/proofs');
-            $proofPath = str_replace('public/', '', $proofPath);
+            $file = $request->file('proof');
+            $date = \Carbon\Carbon::now()->format('dmYHis');
+            $name = 'proof_' . $date . '.' . $file->getClientOriginalExtension();
+            $request->file('proof')->move('storage/proofs/', $name);
+            $proof = 'storage/proofs/'.$name;
             // Save the $proofPath to your order or database record
             $order = new Order;
-            $order->proof = $proofPath;
+            $order->proof = $proof;
             $order->save();
         }
 

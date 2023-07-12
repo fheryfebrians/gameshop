@@ -31,6 +31,10 @@
                                 <span class="value">{{$item->address}}</span>
                             </div>
                             <div class="order-info-item">
+                                <span class="label" style="color: #000;">Price:</span>
+                                <span class="value">Rp.{{$item->product->price}},-</span>
+                            </div>
+                            <div class="order-info-item">
                                 <span class="label" style="color: #000;">Payment Status:</span>
                                 <span class="value">{{$item->payment_status}}</span>
                             </div>
