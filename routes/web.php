@@ -40,7 +40,7 @@ Route::get("search",[ProductController::class,'search']);
 Route::middleware('user')->group(function() {
     Route::post("add_to_cart",[ProductController::class,'addToCart']);
     Route::get("cartlist",[ProductController::class,'cartList']);
-    Route::get("removecart/{id}",[ProductController::class,'removeCart']);
+    Route::post("removecart/{id}",[ProductController::class,'removeCart']);
     Route::get("ordernow",[ProductController::class,'orderNow']);
     Route::post("orderplace",[ProductController::class,'orderplace']);
     Route::get("myorders",[ProductController::class,'myOrders']);
@@ -51,6 +51,7 @@ Route::middleware('user')->group(function() {
     Route::resource('products', ProductController::class);
     Route::post('/upload', 'ProductController@store')->name('product.store');
     Route::post('/storeOrder', [ProductController::class, 'storeOrder']);
+    Route::get('penjualan', [ProductController::class, 'penjualan']);
 });
 
 Route::prefix('admin')->middleware('admin')->group(function() {

@@ -22,7 +22,6 @@
                 <div class="col-sm-3">
                     <form action="/removecart/{{$item->cart_id}}" method="POST">
                         @csrf
-                        @method('DELETE')
                         <button type="submit" class="btn btn-warning">Remove from Cart</button>
                     </form>
                 </div>

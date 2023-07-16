@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -16,11 +17,11 @@ class UserController extends Controller
           $user= User::where(['email'=>$req->email])->first();
          if(!$user   || !Hash::check($req->password, $user->password))
           {
-              return redirect('/');
+              return redirect('/')->with('error', 'Your email or password is wrong!');
           }
           else{
               $req->session()->put('user',$user);
-              return redirect('/');
+              return redirect('/')->with('success', 'Login successfully!');
           }
     }
 
@@ -33,7 +34,7 @@ class UserController extends Controller
         $user->role = 0;
         $user->save();
         $req->session()->put('user',$user);
-        return redirect('/');
+        return redirect('/')->with('success', 'Register successfulyy!');
     }
     // function login(Request $req)
     //  {

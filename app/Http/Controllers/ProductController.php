@@ -38,12 +38,12 @@ class ProductController extends Controller
             $cart->user_id=$req->session()->get('user')['id'];
             $cart->product_id=$req->product_id;
             $cart->save();
-            return redirect('/');
+            return redirect('/')->with('success', 'Success Add To Cart');
 
         }
         else
         {
-            return redirect('/login');
+            return redirect('/login')->with('error', 'You must Login first!');
         }
     }
     static function cartItem()
@@ -65,7 +65,7 @@ class ProductController extends Controller
     function removeCart($id)
     {
         Cart::destroy($id);
-        return redirect('cartlist');
+        return redirect('cartlist')->with('success', 'Remove From Cart successfully!');
     }
     function orderNow()
     {
@@ -125,7 +125,7 @@ class ProductController extends Controller
             Cart::where('user_id', $userId)->delete();
         }
 
-            return redirect('/');
+            return redirect('/')->with('success', 'Your Order successfully!');
         }
 
     function myOrders()
@@ -189,6 +189,14 @@ class ProductController extends Controller
 
         return redirect()->back()->with('success', 'Payment Proof successfully uploaded');
         // Redirect or return a response
+    }
+
+    function penjualan()
+    {
+        $userId=Session::get('user')['id'];
+        $product = Product::where('user_id', $userId)->pluck('id');
+        $orders = Order::whereIn('product_id', $product)->get();
+        return view('penjualan', ['orders' => $orders]);
     }
 
 }

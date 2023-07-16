@@ -29,6 +29,7 @@ if(Session::has('user'))
               <li><a href="/admin/transaction">Transaction</a></li>
             @else
              <li><a href="/myorders">Order</a></li>
+             <li><a href="/penjualan">Penjualan</a></li>
              <li><a href="/upload">Upload Product</a></li>
             @endif
           @endif
